@@ -1,6 +1,9 @@
 
 #include <stdio.h>
 
+#define R_NUMBER 11854183
+#define WORK_DATE 2012026
+
 __global__ void vecadd_kernel (float *x, float *y, float *z, int n) {
   int i = blockIdx.x * blockDim.x + threadIdx.x;
   if (i < n) {
@@ -82,8 +85,8 @@ int main (void) {
   float x[1000], y[1000], z[1000];
   int i;
   for (i = 0; i < 1000; i++) {
-    x[i] = 1.0;
-    y[i] = 2.0;
+    x[i] = (float)(R_NUMBER + i);
+    y[i] = (float)(WORK_DATE - 2*i);
   }
 
   /* call to a function to set up the vector addition on the gpu */
@@ -92,6 +95,7 @@ int main (void) {
   /* print the results */
 
   putchar('\n');
+  printf("R=%d  Date=%d  n=%d\n", R_NUMBER, WORK_DATE, 1000);
   for (i = 0; i < 10; i++) {
     printf ("z[%2d] = %f\n",i,z[i]);
   }
